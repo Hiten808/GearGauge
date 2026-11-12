@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gear Gauge - Tech Spec and Gadget Comparison Portal. A Web Technology course project built with PHP, MySQLi and vanilla JavaScript.">
+    <title>Gear Gauge — Tech Spec &amp; Gadget Comparison Portal</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --border-color: #334155;
+            --text-color: #e2e8f0;
+            --muted-color: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-soft-color: rgba(56, 189, 248, 0.12);
+            --success-color: #34d399;
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            background:
+                radial-gradient(1100px 500px at 85% -10%, rgba(56, 189, 248, 0.09), transparent),
+                var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 18px 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .brand span {
+            color: var(--accent-color);
+        }
+
+        .nav-links a {
+            color: var(--muted-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 18px;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--accent-color);
+        }
+
+        .hero p {
+            color: var(--muted-color);
+            max-width: 640px;
+            margin: 16px auto 32px;
+            font-size: 1.1rem;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: transform 0.15s, background 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #0b1220;
+        }
+
+        .btn-primary:hover {
+            background: #0ea5e9;
+            color: #0b1220;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .note {
+            margin: 26px auto 0;
+            max-width: 720px;
+            background: var(--accent-soft-color);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: var(--accent-color);
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .screenshot-frame {
+            margin: 50px auto 10px;
+            max-width: 900px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(2, 6, 23, 0.55);
+        }
+
+        .screenshot-frame img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .caption {
+            text-align: center;
+            color: var(--muted-color);
+            font-size: 0.85rem;
+            margin-bottom: 50px;
+        }
+
+        section.features {
+            padding: 30px 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: var(--muted-color);
+            font-size: 0.95rem;
+        }
+
+        .card .tag {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: var(--accent-soft-color);
+            color: var(--accent-color);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .run-locally {
+            margin: 50px 0 60px;
+        }
+
+        .steps {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 28px;
+        }
+
+        .steps ol {
+            margin: 14px 0 0 22px;
+            color: var(--muted-color);
+        }
+
+        .steps li {
+            margin-bottom: 8px;
+        }
+
+        .steps code {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            color: var(--success-color);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 26px 0;
+            text-align: center;
+            color: var(--muted-color);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar container">
+            <a class="brand" href="index.html">Gear<span>Gauge</span></a>
+            <div class="nav-links">
+                <a href="https://github.com/Hiten808/GearGauge">Source Code</a>
+                <a href="https://vanilla-dirt-dice-award.trycloudflare.com/GearGauge/">Live Website</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero container">
+            <h1>Measure the gear. <span>Trust the gauge.</span></h1>
+            <p>Gear Gauge is a full-stack Tech Spec &amp; Gadget Comparison Portal — compare laptops and phones side by side with live spec highlighting, browse a database-driven catalog, and manage devices through an admin dashboard.</p>
+            <div class="cta-row">
+                <a class="btn btn-primary" href="https://vanilla-dirt-dice-award.trycloudflare.com/GearGauge/">Open Live Website →</a>
+                <a class="btn btn-outline" href="https://github.com/Hiten808/GearGauge">View Source Code</a>
+            </div>
+            <p class="note">The live link above is served by a temporary demo tunnel — if it stops responding, the project can be run locally in under two minutes using the steps at the bottom of this page.</p>
+        </section>
+        <section class="container">
+            <div class="screenshot-frame">
+                <img src="preview.jpeg" alt="Gear Gauge comparison page showing a MacBook Air 13 M3 versus iPhone 15 Pro with winning specifications highlighted in green">
+            </div>
+            <p class="caption">Side-by-side comparison with automatic winner highlighting — RAM, storage and battery favour higher values, price favours lower.</p>
+        </section>
+        <section class="features container">
+            <h2 class="section-title">What it does</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Side-by-Side Comparison</h3>
+                    <p>Pick any two devices from the MySQL database and get a full specification showdown. JavaScript highlights the better value for RAM, storage, battery and price in green.</p>
+                    <span class="tag">index.php</span>
+                </div>
+                <div class="card">
+                    <h3>Live Search Catalog</h3>
+                    <p>A responsive grid of every device with instant client-side filtering by name, brand, category or processor — no page reloads needed.</p>
+                    <span class="tag">browse.php</span>
+                </div>
+                <div class="card">
+                    <h3>Accounts &amp; Saved Comparisons</h3>
+                    <p>Register and log in with password_hash secured credentials. Save any comparison to your profile and reopen it any time.</p>
+                    <span class="tag">profile.php</span>
+                </div>
+                <div class="card">
+                    <h3>Admin Dashboard</h3>
+                    <p>Role-protected panel to add, edit and delete devices with image upload validation — JPG, PNG or WEBP up to 2 MB.</p>
+                    <span class="tag">admin.php</span>
+                </div>
+                <div class="card">
+                    <h3>Secure by Design</h3>
+                    <p>Every query uses MySQLi prepared statements and every output passes through htmlspecialchars to prevent SQL injection and XSS.</p>
+                    <span class="tag">Security</span>
+                </div>
+                <div class="card">
+                    <h3>Built From Scratch</h3>
+                    <p>Pure HTML5, CSS3, vanilla ES6 JavaScript and procedural PHP 8 — no frameworks, no libraries, fully responsive dark theme.</p>
+                    <span class="tag">Course Project</span>
+                </div>
+            </div>
+        </section>
+        <section class="run-locally container">
+            <div class="steps">
+                <h2>Run it locally with XAMPP</h2>
+                <ol>
+                    <li>Install XAMPP and start <strong>Apache</strong> + <strong>MySQL</strong>.</li>
+                    <li>Copy the project into <code>C:\xampp\htdocs\GearGauge</code>.</li>
+                    <li>Import <code>database.sql</code> via phpMyAdmin at <code>http://localhost/phpmyadmin</code>.</li>
+                    <li>Open <code>http://localhost/GearGauge/</code> and log in as <code>admin@specmatrix.com</code> / <code>admin123</code>.</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>GearGauge — Tech Spec &amp; Gadget Comparison Portal — Web Technology Course Project</p>
+        </div>
+    </footer>
+</body>
+</html>
