@@ -1,4 +1,8 @@
 uploads/*
 !uploads/.gitkeep
+!uploads/laptop.svg
+!uploads/phone.svg
+!uploads/tablet.svg
+!uploads/androidtv.svg
 .env
 .DS_Store
