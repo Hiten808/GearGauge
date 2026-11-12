@@ -80,94 +80,16 @@
 
         .hero {
             text-align: center;
-            padding: 70px 0 30px;
+            padding: 110px 0 60px;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 3.4rem;
             line-height: 1.2;
         }
 
         .hero h1 span {
             color: var(--accent-color);
-        }
-
-        .hero p {
-            color: var(--muted-color);
-            max-width: 640px;
-            margin: 16px auto 32px;
-            font-size: 1.1rem;
-        }
-
-        .cta-row {
-            display: flex;
-            gap: 14px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 30px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: transform 0.15s, background 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: var(--accent-color);
-            color: #0b1220;
-        }
-
-        .btn-primary:hover {
-            background: #0ea5e9;
-            color: #0b1220;
-        }
-
-        .btn-outline {
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin: 44px auto 0;
-            padding: 22px 10px;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            max-width: 760px;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 1.7rem;
-            font-weight: 800;
-            color: var(--accent-color);
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            color: var(--muted-color);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .screenshot-frame {
@@ -290,6 +212,12 @@
             color: var(--muted-color);
             font-size: 0.85rem;
         }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -305,29 +233,6 @@
     <main>
         <section class="hero container">
             <h1>Measure the gear. <span>Trust the gauge.</span></h1>
-            <p>Gear Gauge is a full-stack Tech Spec &amp; Gadget Comparison Portal — compare laptops, phones, tablets and Android TVs side by side with automatic winner highlighting, browse a searchable 30-device catalog, and manage the whole catalog through a role-protected admin dashboard.</p>
-            <div class="cta-row">
-                <a class="btn btn-primary" href="https://vanilla-dirt-dice-award.trycloudflare.com/GearGauge/">Open Live Website →</a>
-                <a class="btn btn-outline" href="https://github.com/Hiten808/GearGauge">View Source Code</a>
-            </div>
-            <div class="stats-row">
-                <div class="stat">
-                    <div class="stat-value">30</div>
-                    <div class="stat-label">Products</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">Categories</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">8</div>
-                    <div class="stat-label">PHP Pages</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">Vanilla Stack</div>
-                </div>
-            </div>
         </section>
         <section class="container">
             <div class="screenshot-frame">
@@ -392,7 +297,7 @@
     </main>
     <footer>
         <div class="container">
-            <p>GearGauge — Tech Spec &amp; Gadget Comparison Portal — Web Technology Course Project</p>
+            <p>GearGauge — Tech Spec &amp; Gadget Comparison Portal</p>
         </div>
     </footer>
 </body>
