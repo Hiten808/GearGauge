@@ -59,7 +59,7 @@ foreach ($devices as $device) {
         <article class="device-card" data-search="<?= htmlspecialchars(strtolower($searchableText)) ?>" data-category="<?= htmlspecialchars($device['category']) ?>">
             <a class="device-image" href="device.php?id=<?= (int)$device['id'] ?>">
                 <?php if ($device['image_path'] !== ''): ?>
-                    <img src="<?= htmlspecialchars($device['image_path']) ?>" alt="<?= htmlspecialchars($device['name']) ?>" loading="lazy">
+                    <img src="<?= htmlspecialchars($device['image_path']) ?>" alt="<?= htmlspecialchars($device['name']) ?>">
                 <?php else: ?>
                     <span class="image-placeholder"><?= htmlspecialchars(format_category($device['category'])) ?></span>
                 <?php endif; ?>
