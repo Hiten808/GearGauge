@@ -58,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
     if ($formValues['brand'] === '') {
         $formErrors['brand'] = 'Brand is required.';
     }
-    if (!in_array($formValues['category'], ['laptop', 'phone'], true)) {
-        $formErrors['category'] = 'Category must be laptop or phone.';
+    if (!in_array($formValues['category'], ['laptop', 'phone', 'tablet', 'androidtv'], true)) {
+        $formErrors['category'] = 'Category must be laptop, phone, tablet or Android TV.';
     }
     if ($formValues['processor'] === '') {
         $formErrors['processor'] = 'Processor is required.';
@@ -70,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
     if (!ctype_digit($formValues['storage_gb']) || (int)$formValues['storage_gb'] < 1) {
         $formErrors['storage_gb'] = 'Storage must be a positive whole number of GB.';
     }
-    if (!ctype_digit($formValues['battery_mah']) || (int)$formValues['battery_mah'] < 1) {
-        $formErrors['battery_mah'] = 'Battery capacity must be a positive number of mAh.';
+    if (!ctype_digit($formValues['battery_mah']) || (int)$formValues['battery_mah'] < 0) {
+        $formErrors['battery_mah'] = 'Battery capacity must be a non-negative number of mAh.';
     }
     if (!is_numeric($formValues['price']) || (float)$formValues['price'] < 0) {
         $formErrors['price'] = 'Price must be a valid non-negative number.';
@@ -176,6 +176,8 @@ require_once __DIR__ . '/includes/header.php';
             <select id="category" name="category" data-required>
                 <option value="laptop"<?= $formValues['category'] === 'laptop' ? ' selected' : '' ?>>Laptop</option>
                 <option value="phone"<?= $formValues['category'] === 'phone' ? ' selected' : '' ?>>Phone</option>
+                <option value="tablet"<?= $formValues['category'] === 'tablet' ? ' selected' : '' ?>>Tablet</option>
+                <option value="androidtv"<?= $formValues['category'] === 'androidtv' ? ' selected' : '' ?>>Android TV</option>
             </select>
             <small class="field-error"><?= htmlspecialchars($formErrors['category'] ?? '') ?></small>
         </div>
@@ -200,8 +202,8 @@ require_once __DIR__ . '/includes/header.php';
             <small class="field-error"></small>
         </div>
         <div class="form-field">
-            <label for="battery_mah">Battery (mAh)</label>
-            <input type="number" id="battery_mah" name="battery_mah" min="1" step="1" value="<?= htmlspecialchars($formValues['battery_mah']) ?>" data-required>
+            <label for="battery_mah">Battery (mAh, 0 for mains-powered devices)</label>
+            <input type="number" id="battery_mah" name="battery_mah" min="0" step="1" value="<?= htmlspecialchars($formValues['battery_mah']) ?>" data-required>
             <small class="field-error"><?= htmlspecialchars($formErrors['battery_mah'] ?? '') ?></small>
         </div>
         <div class="form-field">

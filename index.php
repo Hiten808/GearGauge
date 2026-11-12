@@ -26,11 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save_
 }
 
 $deviceList = [];
-$deviceListResult = $dbConnection->query('SELECT id, name, brand, category FROM devices ORDER BY brand, name');
+$deviceListResult = $dbConnection->query('SELECT id, name, brand, category FROM devices ORDER BY category, brand, name');
 while ($deviceListRow = $deviceListResult->fetch_assoc()) {
     $deviceList[] = $deviceListRow;
 }
 $deviceListResult->free();
+
+$groupedDeviceList = [];
+foreach ($deviceList as $deviceListDevice) {
+    $groupedDeviceList[$deviceListDevice['category']][] = $deviceListDevice;
+}
 
 $selectedDeviceOneId = isset($_GET['device_1_id']) ? (int)$_GET['device_1_id'] : 0;
 $selectedDeviceTwoId = isset($_GET['device_2_id']) ? (int)$_GET['device_2_id'] : 0;
@@ -98,10 +103,14 @@ require_once __DIR__ . '/includes/header.php';
             <label for="device_1_id">Device 1</label>
             <select id="device_1_id" name="device_1_id">
                 <option value="">— Select a device —</option>
-                <?php foreach ($deviceList as $device): ?>
-                    <option value="<?= (int)$device['id'] ?>"<?= $selectedDeviceOneId === (int)$device['id'] ? ' selected' : '' ?>>
-                        <?= htmlspecialchars($device['brand'] . ' ' . $device['name']) ?>
-                    </option>
+                <?php foreach ($groupedDeviceList as $groupCategory => $groupDevices): ?>
+                    <optgroup label="<?= htmlspecialchars(format_category($groupCategory)) ?>">
+                        <?php foreach ($groupDevices as $device): ?>
+                            <option value="<?= (int)$device['id'] ?>"<?= $selectedDeviceOneId === (int)$device['id'] ? ' selected' : '' ?>>
+                                <?= htmlspecialchars($device['brand'] . ' ' . $device['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </optgroup>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -110,10 +119,14 @@ require_once __DIR__ . '/includes/header.php';
             <label for="device_2_id">Device 2</label>
             <select id="device_2_id" name="device_2_id">
                 <option value="">— Select a device —</option>
-                <?php foreach ($deviceList as $device): ?>
-                    <option value="<?= (int)$device['id'] ?>"<?= $selectedDeviceTwoId === (int)$device['id'] ? ' selected' : '' ?>>
-                        <?= htmlspecialchars($device['brand'] . ' ' . $device['name']) ?>
-                    </option>
+                <?php foreach ($groupedDeviceList as $groupCategory => $groupDevices): ?>
+                    <optgroup label="<?= htmlspecialchars(format_category($groupCategory)) ?>">
+                        <?php foreach ($groupDevices as $device): ?>
+                            <option value="<?= (int)$device['id'] ?>"<?= $selectedDeviceTwoId === (int)$device['id'] ? ' selected' : '' ?>>
+                                <?= htmlspecialchars($device['brand'] . ' ' . $device['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </optgroup>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -169,8 +182,9 @@ require_once __DIR__ . '/includes/header.php';
                                 $displayValue = match ($specField) {
                                     'ram_gb' => number_format((int)$specValue) . ' GB',
                                     'storage_gb' => number_format((int)$specValue) . ' GB',
-                                    'battery_mah' => number_format((int)$specValue) . ' mAh',
+                                    'battery_mah' => (int)$specValue > 0 ? number_format((int)$specValue) . ' mAh' : 'Mains powered (no battery)',
                                     'price' => '$' . number_format((float)$specValue, 2),
+                                    'category' => htmlspecialchars(format_category((string)$specValue)),
                                     default => htmlspecialchars((string)$specValue),
                                 };
                                 ?>

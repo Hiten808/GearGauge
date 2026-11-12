@@ -49,25 +49,43 @@ function initialiseSearchFilter() {
     const resultCount = document.getElementById('search-result-count');
     const noResultsMessage = document.getElementById('no-results-message');
     const totalText = resultCount ? resultCount.textContent : '';
+    const filterChips = document.querySelectorAll('#filter-chips .chip');
+    let activeCategory = 'all';
 
-    searchInput.addEventListener('input', () => {
+    filterChips.forEach((filterChip) => {
+        filterChip.addEventListener('click', () => {
+            filterChips.forEach((otherChip) => otherChip.classList.remove('active'));
+            filterChip.classList.add('active');
+            activeCategory = filterChip.dataset.category;
+            applyDeviceFilters();
+        });
+    });
+
+    function applyDeviceFilters() {
         const query = searchInput.value.trim().toLowerCase();
         let visibleCount = 0;
         deviceCards.forEach((deviceCard) => {
             const searchableText = deviceCard.dataset.search || '';
-            const isMatch = searchableText.includes(query);
+            const cardCategory = deviceCard.dataset.category || '';
+            const matchesSearch = searchableText.includes(query);
+            const matchesCategory = activeCategory === 'all' || cardCategory === activeCategory;
+            const isMatch = matchesSearch && matchesCategory;
             deviceCard.classList.toggle('hidden', !isMatch);
             if (isMatch) {
                 visibleCount += 1;
             }
         });
         if (resultCount) {
-            resultCount.textContent = query === '' ? totalText : `${visibleCount} device(s) match "${query}"`;
+            resultCount.textContent = query === '' && activeCategory === 'all'
+                ? totalText
+                : `${visibleCount} device(s) match`;
         }
         if (noResultsMessage) {
             noResultsMessage.classList.toggle('hidden', visibleCount > 0);
         }
-    });
+    }
+
+    searchInput.addEventListener('input', applyDeviceFilters);
 }
 
 function initialiseFormValidation() {

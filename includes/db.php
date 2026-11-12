@@ -18,3 +18,14 @@ try {
     http_response_code(500);
     die('Database connection failed. Please check the database settings in includes/db.php');
 }
+
+function format_category(string $category): string
+{
+    return match ($category) {
+        'laptop' => 'Laptop',
+        'phone' => 'Phone',
+        'tablet' => 'Tablet',
+        'androidtv' => 'Android TV',
+        default => ucfirst($category),
+    };
+}
