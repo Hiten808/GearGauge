@@ -156,8 +156,8 @@ require_once __DIR__ . '/includes/header.php';
                 <thead>
                     <tr>
                         <th scope="col">Specification</th>
-                        <th scope="col"><?= htmlspecialchars($deviceOne['brand'] . ' ' . $deviceOne['name']) ?></th>
-                        <th scope="col"><?= htmlspecialchars($deviceTwo['brand'] . ' ' . $deviceTwo['name']) ?></th>
+                        <th scope="col"><a class="table-name-link" href="device.php?id=<?= (int)$deviceOne['id'] ?>"><?= htmlspecialchars($deviceOne['brand'] . ' ' . $deviceOne['name']) ?></a></th>
+                        <th scope="col"><a class="table-name-link" href="device.php?id=<?= (int)$deviceTwo['id'] ?>"><?= htmlspecialchars($deviceTwo['brand'] . ' ' . $deviceTwo['name']) ?></a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -180,6 +180,7 @@ require_once __DIR__ . '/includes/header.php';
                                         . '"';
                                 }
                                 $displayValue = match ($specField) {
+                                    'name' => '<a class="table-name-link" href="device.php?id=' . (int)$comparedDevice['id'] . '">' . htmlspecialchars((string)$specValue) . '</a>',
                                     'ram_gb' => number_format((int)$specValue) . ' GB',
                                     'storage_gb' => number_format((int)$specValue) . ' GB',
                                     'battery_mah' => (int)$specValue > 0 ? number_format((int)$specValue) . ' mAh' : 'Mains powered (no battery)',

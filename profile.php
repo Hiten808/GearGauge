@@ -81,7 +81,7 @@ require_once __DIR__ . '/includes/header.php';
                             <form class="inline-form" method="post" action="profile.php">
                                 <input type="hidden" name="action" value="delete_comparison">
                                 <input type="hidden" name="comparison_id" value="<?= (int)$comparison['id'] ?>">
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this saved comparison? This cannot be undone.')">Delete</button>
                             </form>
                         </td>
                     </tr>

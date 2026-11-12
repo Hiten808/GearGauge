@@ -25,6 +25,13 @@ $categoryFilters = [
     'tablet' => 'Tablets',
     'androidtv' => 'Android TVs',
 ];
+
+$categoryCounts = ['all' => $totalDevices, 'laptop' => 0, 'phone' => 0, 'tablet' => 0, 'androidtv' => 0];
+foreach ($devices as $device) {
+    if (isset($categoryCounts[$device['category']])) {
+        $categoryCounts[$device['category']]++;
+    }
+}
 ?>
 
 <section class="page-head">
@@ -37,7 +44,7 @@ $categoryFilters = [
 <section class="card search-bar">
     <div class="filter-chips" id="filter-chips">
         <?php foreach ($categoryFilters as $filterValue => $filterLabel): ?>
-            <button type="button" class="chip<?= $filterValue === 'all' ? ' active' : '' ?>" data-category="<?= $filterValue ?>"><?= htmlspecialchars($filterLabel) ?></button>
+            <button type="button" class="chip<?= $filterValue === 'all' ? ' active' : '' ?>" data-category="<?= $filterValue ?>"><?= htmlspecialchars($filterLabel) ?> (<?= (int)$categoryCounts[$filterValue] ?>)</button>
         <?php endforeach; ?>
     </div>
     <label class="visually-hidden" for="device-search">Search devices</label>
@@ -52,7 +59,7 @@ $categoryFilters = [
         <article class="device-card" data-search="<?= htmlspecialchars(strtolower($searchableText)) ?>" data-category="<?= htmlspecialchars($device['category']) ?>">
             <a class="device-image" href="device.php?id=<?= (int)$device['id'] ?>">
                 <?php if ($device['image_path'] !== ''): ?>
-                    <img src="<?= htmlspecialchars($device['image_path']) ?>" alt="<?= htmlspecialchars($device['name']) ?>">
+                    <img src="<?= htmlspecialchars($device['image_path']) ?>" alt="<?= htmlspecialchars($device['name']) ?>" loading="lazy">
                 <?php else: ?>
                     <span class="image-placeholder"><?= htmlspecialchars(format_category($device['category'])) ?></span>
                 <?php endif; ?>
